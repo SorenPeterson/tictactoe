@@ -1,0 +1,22 @@
+<head>
+	<title>Tic Tac Toe</title>
+</head>
+<body>
+	<h1>Tic Tac Toe</h1>
+	{{> Board}}
+</body>
+
+<template name="Board">
+	<table class="board">
+		{{#each rows}}
+			<tr>
+				{{#each this}}
+					<td class="spot">
+						<div class="marker marker-{{this}}"></div>
+					</td>
+				{{/each}}
+			</tr>
+		{{/each}}
+	</table>
+</template>
+
