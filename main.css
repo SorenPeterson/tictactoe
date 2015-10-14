@@ -1,0 +1,17 @@
+body {
+	text-align: center;
+}
+
+.board {
+	margin: auto;
+}
+
+.spot {
+	display: inline-block;
+	height: 100px;
+	width: 100px;
+	border: 1px solid black;
+	box-sizing: border-box;
+	margin: 0;
+}
+
