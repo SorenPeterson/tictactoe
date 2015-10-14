@@ -1,10 +1,12 @@
 <head>
-
 	<title>Tic Tac Toe</title>
-
 </head>
 <body>
 	<h1>Tic Tac Toe</h1>
+	{{> Board}}
+</body>
+
+<template name="Board">
 	<table class="board">
 		<tr>
 			<td class="spot"></td>
@@ -22,4 +24,4 @@
 			<td class="spot"></td>
 		</tr>
 	</table>
-</body>
+</template>

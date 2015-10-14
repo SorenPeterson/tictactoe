@@ -1,9 +1,4 @@
-var Game = function() {
-	this.state = [,,,,,,,,,];
+var Board = function() {
+	this.state = ReactiveVar([,,,,,,,,,]);
 }
 
-Game.prototype.render = function() {
-}
-
-var game = new Game();
-console.log(game.state.length);
