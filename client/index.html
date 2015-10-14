@@ -11,8 +11,8 @@
 		{{#each rows}}
 			<tr>
 				{{#each this}}
-					<td class="spot">
-						<div class="marker marker-{{this}}"></div>
+					<td data-id={{this.index}} class="spot">
+						<div class="marker marker-{{this.value}}"></div>
 					</td>
 				{{/each}}
 			</tr>
