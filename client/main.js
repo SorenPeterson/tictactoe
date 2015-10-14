@@ -3,10 +3,25 @@ var Board = function() {
 	this.doge = "hi";
 }
 
+Board.prototype.reset = function() {
+	this.state.set([0,0,0,0,0,0,0,0,0]);
+}
+
+Board.prototype.isFull = function() {
+	return _(this.state.get()).every(function(spot) {
+		return spot !== 0;
+	});
+}
+
 var board;
 
 Template.Board.onCreated(function() {
 	board = new Board();
+	Tracker.autorun(function() {
+		if(board.isFull()) {
+			board.reset();
+		};
+	});
 });
 
 Template.Board.helpers({
@@ -32,7 +47,10 @@ Template.Board.helpers({
 
 Template.Board.events({
 	'click .spot': function(evt, tmpl) {
-		state = board.state.get();
+		var state = board.state.get();
+		var position = new Number(evt.target.closest('.spot').dataset.id);
+		state[position] = 'x';
+		board.state.set(state);
 	}
 });
 
