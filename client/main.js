@@ -26,11 +26,6 @@ var board;
 
 Template.Board.onCreated(function() {
 	board = new Board();
-	Tracker.autorun(function() {
-		if(board.isFinished()) {
-			board.reset();
-		};
-	});
 });
 
 Template.Board.helpers({
@@ -58,6 +53,6 @@ Template.Board.events({
 	'click .spot': function(evt, tmpl) {
 		var position = new Number(evt.target.closest('.spot').dataset.id);
 		board.play(position);
-	}
+	},
 });
 
