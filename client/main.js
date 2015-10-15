@@ -1,6 +1,5 @@
 var Board = function() {
 	this.state = new ReactiveVar([0,0,0,0,0,0,0,0,0]);
-	this.doge = "hi";
 	this.turn = new ReactiveVar('x');
 }
 
@@ -8,7 +7,7 @@ Board.prototype.reset = function() {
 	this.state.set([0,0,0,0,0,0,0,0,0]);
 }
 
-Board.prototype.isFull = function() {
+Board.prototype.isFinished = function() {
 	return _(this.state.get()).every(function(spot) {
 		return spot !== 0;
 	});
@@ -16,9 +15,11 @@ Board.prototype.isFull = function() {
 
 Board.prototype.play = function(position) {
 	var state = this.state.get();
-	state[position] = this.turn.get();
-	this.turn.set(this.turn.get() === 'x' ? 'o' : 'x');
-	this.state.set(state);
+	if(state[position] === 0) {
+		state[position] = this.turn.get();
+		this.turn.set(this.turn.get() === 'x' ? 'o' : 'x');
+		this.state.set(state);
+	}
 }
 
 var board;
@@ -26,7 +27,7 @@ var board;
 Template.Board.onCreated(function() {
 	board = new Board();
 	Tracker.autorun(function() {
-		if(board.isFull()) {
+		if(board.isFinished()) {
 			board.reset();
 		};
 	});
