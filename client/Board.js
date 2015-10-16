@@ -9,7 +9,9 @@ Board = function(initial_state) {
 		var state = that.state.get();
 		that.winner.set(_(that.winningLines).reduce(function(winner, line, index) {
 			return winner || _(line).reduce(function(last_spot, spot_index, index) {
-				last_spot = index === 0 ? state[spot_index] : last_spot;
+				if(state[spot_index] !== 0) {
+					last_spot = index === 0 ? state[spot_index] : last_spot;
+				}
 				return last_spot === state[spot_index] ? last_spot : undefined;
 			}, undefined);
 		}, undefined));
@@ -27,7 +29,7 @@ Board = function(initial_state) {
 	this.finished = new ReactiveVar(false);
 	Tracker.autorun(function() {
 		that.finished.set(
-			(that.winner.get() !== 0) || that.full.get()
+			(that.winner.get() !== undefined) || that.full.get()
 		);
 	});
 
