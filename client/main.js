@@ -1,3 +1,9 @@
+var Minimax = function(board) {
+	if(board.finished()) {
+		return board.score();
+	}
+}
+
 var Board = function() {
 	this.state = new ReactiveVar([0,0,0,0,0,0,0,0,0]);
 	this.turn = new ReactiveVar('x');
@@ -8,6 +14,16 @@ Board.prototype.reset = function() {
 }
 
 Board.prototype.isFinished = function() {
+	return _(this.state.get()).every(function(spot) {
+		return spot !== 0;
+	});
+}
+
+Board.prototype.finished = function() {
+	return (this.winner().length > 0) || this.full();
+}
+
+Board.prototype.full = function() {
 	return _(this.state.get()).every(function(spot) {
 		return spot !== 0;
 	});
@@ -44,6 +60,7 @@ Board.prototype.winningLines = [
 	[0, 4, 8],
 	[2, 4, 6],
 ];
+
 var board;
 
 Template.Board.onCreated(function() {
