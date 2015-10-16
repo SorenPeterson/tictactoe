@@ -1,13 +1,7 @@
 var Minimax = function(board) {
 }
 
-var Score = function() {
-	if(board.finished()) {
-		return board.score();
-	} else {
-		_(board.possible_moves).reduce(function() {
-		});
-	}
+var Score = function(board) {
 }
 
 var board;
