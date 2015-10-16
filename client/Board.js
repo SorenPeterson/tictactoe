@@ -7,12 +7,12 @@ Board = function() {
 	this.winner = new ReactiveVar([]);
 	Tracker.autorun(function() {
 		var state = that.state.get();
-		that.winner.set(_(that.winningLines).reduce(function(winner, line) {
-			return winner || _(line).reduce(function(last_spot, spot_index) {
-				last_spot = last_spot === 0 ? state[spot_index] : last_spot;
-				return last_spot === state[spot_index] ? state[spot_index] : undefined;
-			});
-		}));
+		that.winner.set(_(that.winningLines).reduce(function(winner, line, index) {
+			return winner || _(line).reduce(function(last_spot, spot_index, index) {
+				last_spot = index === 0 ? state[spot_index] : last_spot;
+				return last_spot === state[spot_index] ? last_spot : undefined;
+			}, undefined);
+		}, undefined));
 	});
 
 	this.full = new ReactiveVar(false);
@@ -35,12 +35,10 @@ Board = function() {
 	Tracker.autorun(function() {
 		var state = that.state.get();
 		that.possible_moves.set(_(state).reduce(function(possible_moves, spot, index) {
-			if(spot === 0) {
-				return (possible_moves || []).concat([index]);
-			} else {
-				return (possible_moves || []);
-			}
-		}));
+			return possible_moves.concat(
+				spot === 0 ? [index] : []
+			);
+		}, []));
 	});
 }
 
