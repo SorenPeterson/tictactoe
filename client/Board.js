@@ -1,5 +1,5 @@
-Board = function() {
-	this.state = new ReactiveVar([0,0,0,0,0,0,0,0,0]);
+Board = function(initial_state) {
+	this.state = new ReactiveVar((initial_state || [0,0,0,0,0,0,0,0,0]).slice(0));
 	this.turn = new ReactiveVar('x');
 
 	var that = this;

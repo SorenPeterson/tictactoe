@@ -1,7 +1,18 @@
-var Minimax = function(board) {
+Minimax = function(board) {
+	return _(board.possible_moves.get()).filter(function(move) {
+		var test_board = new Board(board.state.get());
+		test_board.play(move);
+		var score = Score(test_board, 'x');
+		return score === 1;
+	});
 }
 
-var Score = function(board) {
+Score = function(board, player) {
+	if(board.finished.get()) {
+		return board.winner.get() === player ? 1 : -1;
+	} else {
+		return 0;
+	}
 }
 
 var board;
