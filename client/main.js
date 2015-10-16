@@ -1,19 +1,17 @@
 Minimax = function(board) {
-	return _(board.possible_moves.get()).filter(function(move) {
+	return _(board.possible_moves()).filter(function(move) {
 		var test_board = new Board(board.state.get());
 		test_board.play(move);
-		console.log(test_board.winner.get());
+		console.log(test_board.winner());
 		var score = Score(test_board, 'x');
 		return score === 1;
 	});
 }
 
 Score = function(board, player) {
-	console.log(board.state.get());
-	console.log(board.winner.get());
-	if(board.finished.get()) {
-		console.log(board.winner.get());
-		return board.winner.get() === player ? 1 : -1;
+	if(board.finished()) {
+		console.log(board.winner());
+		return board.winner() === player ? 1 : -1;
 	} else {
 		return 0;
 	}
