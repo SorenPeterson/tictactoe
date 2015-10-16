@@ -1,8 +1,7 @@
 Minimax = function(board) {
 	return _(board.possible_moves()).filter(function(move) {
-		var test_board = new Board(board.state.get());
+		var test_board = board.clone();
 		test_board.play(move);
-		console.log(test_board.winner());
 		var score = Score(test_board, 'x');
 		return score === 1;
 	});
@@ -10,10 +9,14 @@ Minimax = function(board) {
 
 Score = function(board, player) {
 	if(board.finished()) {
-		console.log(board.winner());
 		return board.winner() === player ? 1 : -1;
 	} else {
-		return 0;
+		var score = _(board.possible_moves()).map(function(move) {
+			var test_board = board.clone();
+			test_board.play(move);
+			return Score(test_board, player === 'x' ? 'o' : 'x');
+		});
+		return score;
 	}
 }
 

@@ -1,6 +1,13 @@
-Board = function(initial_state) {
-	this.state = new ReactiveVar((initial_state || [0,0,0,0,0,0,0,0,0]).slice(0));
+Board = function() {
+	this.state = new ReactiveVar([0,0,0,0,0,0,0,0,0]);
 	this.turn = new ReactiveVar('x');
+}
+
+Board.prototype.clone = function() {
+	var board = new Board();
+	board.state.set(this.state.get().slice(0));
+	board.turn.set(this.turn.get());
+	return board;
 }
 
 Board.prototype.winner = function() {
@@ -41,8 +48,8 @@ Board.prototype.reset = function() {
 Board.prototype.play = function(position) {
 	var state = this.state.get();
 	if(state[position] === 0) {
-		state[position] = this.turn();
-		this.turn.set(this.turn() === 'x' ? 'o' : 'x');
+		state[position] = this.turn.get();
+		this.turn.set(this.turn.get() === 'x' ? 'o' : 'x');
 		this.state.set(state);
 	}
 }
