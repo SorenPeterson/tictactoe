@@ -21,3 +21,5 @@ insecure                # Allow all DB writes from clients (for prototyping)
 underscore
 johnantoni:meteor-normalize
 reactive-var
+sanjo:jasmine
+velocity:html-reporter
