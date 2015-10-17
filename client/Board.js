@@ -65,3 +65,37 @@ Board.prototype.winningLines = [
 	[2, 4, 6],
 ];
 
+Board.prototype.chooseMove = function() {
+}
+
+Board.prototype.canWin = function() {
+	var player = this.turn.get();
+	return _(this.possible_moves()).reduce(function(best_move, possible_move) {
+		test_board = this.clone();
+		test_board.play(possible_move);
+		console.log(test_board.winner());
+		return test_board.winner() === player ? possible_move : best_move;
+	}.bind(this), undefined);
+}
+
+Board.prototype.canBlockWin = function() {
+}
+
+Board.prototype.canFork = function() {
+}
+
+Board.prototype.canBlockFork = function() {
+}
+
+Board.prototype.canPlayCenter = function() {
+}
+
+Board.prototype.canPlayOppositeCorner = function() {
+}
+
+Board.prototype.canPlayEmptyCorner = function() {
+}
+
+Board.prototype.canPlayEmptySide = function() {
+}
+
