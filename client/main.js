@@ -1,4 +1,4 @@
-Minimax = function(board) {
+/*Minimax = function(board) {
 	return _(board.possible_moves()).filter(function(move) {
 		var test_board = board.clone();
 		test_board.play(move);
@@ -26,7 +26,7 @@ Score = function(board, player) {
 			}) ? 1 : 0;
 		}
 	}
-}
+}*/
 
 var board;
 
