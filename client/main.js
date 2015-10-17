@@ -11,12 +11,20 @@ Score = function(board, player) {
 	if(board.finished()) {
 		return board.winner() === player ? 1 : -1;
 	} else {
-		var score = _(board.possible_moves()).map(function(move) {
+		var scores = _(board.possible_moves()).map(function(move) {
 			var test_board = board.clone();
 			test_board.play(move);
-			return Score(test_board, player === 'x' ? 'o' : 'x');
+			return Score(test_board, player);
 		});
-		return score;
+		if(board.turn.get() === player) {
+			return _(scores).any(function(score) {
+				return score === -1;
+			}) ? -1 : 0;
+		} else {
+			return _(scores).any(function(score) {
+				return score === 1;
+			}) ? 1 : 0;
+		}
 	}
 }
 
