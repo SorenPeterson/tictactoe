@@ -1,6 +1,7 @@
 Board = function() {
 	this.state = new ReactiveVar([0,0,0,0,0,0,0,0,0]);
 	this.turn = new ReactiveVar('x');
+	this.started = new ReactiveVar(false);
 }
 
 Board.prototype.clone = function() {
@@ -50,11 +51,12 @@ Board.prototype.possible_moves = function() {
 Board.prototype.reset = function() {
 	this.state.set([0,0,0,0,0,0,0,0,0]);
 	this.turn.set('x');
+	this.started.set(false);
 }
 
 Board.prototype.play = function(position) {
 	var state = this.state.get();
-	if(state[position] === 0) {
+	if(state[position] === 0 && this.started.get()) {
 		state[position] = this.turn.get();
 		this.turn.set(this.turn.get() === 'x' ? 'o' : 'x');
 		this.state.set(state);
