@@ -114,6 +114,19 @@ Board.prototype.canPlayOppositeCorner = function() {
 }
 
 Board.prototype.canPlayEmptyCorner = function() {
+	var state = this.state.get();
+	if(_([0, 2, 6, 8]).every(function(corner) {
+		if(state[corner] === 0) {
+			this.play(corner);
+			return false;
+		} else {
+			return true;
+		}
+	}.bind(this))) {
+		return false;
+	} else {
+		return true;
+	};
 }
 
 Board.prototype.canPlayEmptySide = function() {
