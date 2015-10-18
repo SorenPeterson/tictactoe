@@ -139,18 +139,26 @@ Board.prototype.canFork = function() {
 	var opponent = this.opponent();
 	var best_move;
 	_(this.possible_moves()).each(function(move) {
-		var test_board = this.clone();
-		test_board.play(move);
-		var win_count = _(this.possible_moves()).reduce(function(count, possible_win) {
-			var test_board = this.clone();
-			test_board.pass();
-			test_board.play(possible_win);
-			return count + (test_board.winner() === opponent ? 1 : 0);
+		var first_move = this.clone();
+		first_move.play(move);
+		var win_count = _(first_move.possible_moves()).reduce(function(count, possible_win) {
+			var second_move = first_move.clone();
+			second_move.pass();
+			second_move.play(possible_win);
+			return count + (second_move.winner() === this.turn.get() ? 1 : 0);
 		}.bind(this), 0)
+		console.log(win_count);
 		if(win_count >= 2) {
+			debugger;
 			best_move = move;
 		}
 	}.bind(this));
+	if(best_move !== undefined) {
+		this.play(best_move);
+		return true;
+	} else {
+		return false;
+	}
 }
 
 Board.prototype.canBlockFork = function() {
