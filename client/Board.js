@@ -28,6 +28,12 @@ Board.prototype.full = function() {
 	});
 }
 
+Board.prototype.empty = function() {
+	return _(this.state.get()).every(function(spot) {
+		return spot === 0;
+	});
+}
+
 Board.prototype.finished = function() {
 	return (this.winner() !== undefined) || this.full();
 }
@@ -66,7 +72,9 @@ Board.prototype.winningLines = [
 ];
 
 Board.prototype.chooseMove = function() {
-	if(this.canWin()) {
+	if(this.empty()) {
+		this.play(0);
+	} else if(this.canWin()) {
 	} else if(this.canBlockWin()) {
 	} else if(this.canFork()) {
 	} else if(this.canBlockFork()) {
@@ -81,7 +89,6 @@ Board.prototype.canWin = function() {
 	var move = _(this.possible_moves()).reduce(function(best_move, possible_move) {
 		test_board = this.clone();
 		test_board.play(possible_move);
-		console.log(test_board.winner());
 		return test_board.winner() === player ? possible_move : best_move;
 	}.bind(this), undefined);
 	if(move !== undefined) {
@@ -93,6 +100,22 @@ Board.prototype.canWin = function() {
 }
 
 Board.prototype.canBlockWin = function() {
+	var opponent = this.turn.get() === 'x' ? 'o' : 'x';
+	var best_move;
+	_(this.possible_moves()).each(function(move) {
+		var test_board = this.clone();
+		test_board.turn.set(opponent);
+		test_board.play(move);
+		if(test_board.winner() === opponent) {
+			best_move = move;
+		}
+	}.bind(this));
+	if(best_move !== undefined) {
+		this.play(best_move);
+		return true;
+	} else {
+		return false;
+	}
 }
 
 Board.prototype.canFork = function() {
@@ -114,7 +137,7 @@ Board.prototype.canPlayOppositeCorner = function() {
 	var state = this.state.get();
 	var board_places = [0, 2, 8, 6];
 	if(_(board_places).every(function(corner, index) {
-		if(state[corner] !== 0 && state[board_places[(index+2)%4]] === 0) {
+		if(state[corner] !== this.turn.get() && state[board_places[(index+2)%4]] === 0) {
 			this.play(board_places[(index+2)%4]);
 			return false;
 		} else {
