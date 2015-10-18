@@ -83,13 +83,22 @@ Board.prototype.chooseMove = function() {
 	if(this.empty()) {
 		this.play(0);
 	} else if(this.canWin()) {
+		console.log('could win');
 	} else if(this.canBlockWin()) {
+		console.log('could block win');
 	} else if(this.canFork()) {
+		console.log('could fork');
 	} else if(this.canBlockFork()) {
+		console.log('could block fork');
 	} else if(this.canPlayCenter()) {
+		console.log('can play center');
 	} else if(this.canPlayOppositeCorner()) {
+		console.log('can play opposite corner');
 	} else if(this.canPlayEmptyCorner()) {
-	} else if(this.canPlayEmptySide()) {}
+		console.log('can play empty corner');
+	} else if(this.canPlayEmptySide()) {
+		console.log('can play empty side');
+	}
 }
 
 Board.prototype.canWin = function() {
@@ -127,16 +136,17 @@ Board.prototype.canBlockWin = function() {
 }
 
 Board.prototype.canFork = function() {
-	var opponent = this.turn.get() ? === 'x' ? 'o' : 'x';
+	var opponent = this.opponent();
 	var best_move;
 	_(this.possible_moves()).each(function(move) {
 		var test_board = this.clone();
 		test_board.play(move);
 		var win_count = _(this.possible_moves()).reduce(function(count, possible_win) {
 			var test_board = this.clone();
+			test_board.pass();
 			test_board.play(possible_win);
 			return count + (test_board.winner() === opponent ? 1 : 0);
-		}, 0)
+		}.bind(this), 0)
 		if(win_count >= 2) {
 			best_move = move;
 		}
@@ -159,7 +169,7 @@ Board.prototype.canPlayOppositeCorner = function() {
 	var state = this.state.get();
 	var board_places = [0, 2, 8, 6];
 	if(_(board_places).every(function(corner, index) {
-		if(state[corner] !== this.turn.get() && state[board_places[(index+2)%4]] === 0) {
+		if(state[corner] === this.opponent() && state[board_places[(index+2)%4]] === 0) {
 			this.play(board_places[(index+2)%4]);
 			return false;
 		} else {
