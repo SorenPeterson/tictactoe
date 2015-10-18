@@ -81,3 +81,19 @@ Template.GameOver.events({
 	},
 });
 
+Template.PickSide.helpers({
+	started: function() {
+		return board.started.get();
+	}
+});
+
+Template.PickSide.events({
+	'click .pick.x': function() {
+		board.started.set(true);
+	},
+	'click .pick.o': function() {
+		board.started.set(true);
+		board.chooseMove();
+	},
+});
+

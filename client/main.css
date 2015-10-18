@@ -100,3 +100,26 @@ h1.title {
 	}
 }
 
+.pick {
+	display: inline-block;
+	position: absolute;
+	background-color: salmon;
+	margin: 20px;
+	border-radius: 20px;
+	box-shadow: 0 0 30px aqua;
+	overflow: hidden;
+}
+
+.pick img {
+	display: block;
+	width: 200px;
+}
+
+.pick.x {
+	left: 0;
+}
+
+.pick.o {
+	right: 0;
+}
+

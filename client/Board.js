@@ -8,6 +8,7 @@ Board.prototype.clone = function() {
 	var board = new Board();
 	board.state.set(this.state.get().slice(0));
 	board.turn.set(this.turn.get());
+	board.started.set(true);
 	return board;
 }
 
@@ -58,7 +59,7 @@ Board.prototype.play = function(position) {
 	var state = this.state.get();
 	if(state[position] === 0 && this.started.get()) {
 		state[position] = this.turn.get();
-		this.turn.set(this.turn.get() === 'x' ? 'o' : 'x');
+		this.turn.set(this.opponent());
 		this.state.set(state);
 		return true;
 	}

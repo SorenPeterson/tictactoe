@@ -4,6 +4,7 @@
 <body>
 	<h1 class="title">Tic Tac Toe</h1>
 	{{> Board}}
+	{{> PickSide}}
 	{{> GameOver}}
 </body>
 
@@ -37,5 +38,18 @@
 			</div>
 		</div>
 	{{/if}}
+</template>
+
+<template name="PickSide">
+	{{#unless started}}
+		<div class="pick x">
+			<img src="/playx.jpg"/>
+			Play X
+		</div>
+		<div class="pick o">
+			<img src="/playo.jpg"/>
+			Play O
+		</div>
+	{{/unless}}
 </template>
 
