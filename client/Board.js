@@ -71,7 +71,7 @@ Board.prototype.chooseMove = function() {
 	} else if(this.canFork()) {
 	} else if(this.canBlockFork()) {
 	} else if(this.canPlayCenter()) {
-	} else if(this.canPlayOppositeCenter()) {
+	} else if(this.canPlayOppositeCorner()) {
 	} else if(this.canPlayEmptyCorner()) {
 	} else if(this.canPlayEmptySide()) {}
 }
@@ -111,6 +111,20 @@ Board.prototype.canPlayCenter = function() {
 }
 
 Board.prototype.canPlayOppositeCorner = function() {
+	var state = this.state.get();
+	var board_places = [0, 2, 8, 6];
+	if(_(board_places).every(function(corner, index) {
+		if(state[corner] !== 0 && state[board_places[(index+2)%4]] === 0) {
+			this.play(board_places[(index+2)%4]);
+			return false;
+		} else {
+			return true;
+		}
+	}.bind(this))) {
+		return false;
+	} else {
+		return true;
+	};
 }
 
 Board.prototype.canPlayEmptyCorner = function() {
