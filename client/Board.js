@@ -66,16 +66,30 @@ Board.prototype.winningLines = [
 ];
 
 Board.prototype.chooseMove = function() {
+	if(this.canWin()) {
+	} else if(this.canBlockWin()) {
+	} else if(this.canFork()) {
+	} else if(this.canBlockFork()) {
+	} else if(this.canPlayCenter()) {
+	} else if(this.canPlayOppositeCenter()) {
+	} else if(this.canPlayEmptyCorner()) {
+	} else if(this.canPlayEmptySide()) {}
 }
 
 Board.prototype.canWin = function() {
 	var player = this.turn.get();
-	return _(this.possible_moves()).reduce(function(best_move, possible_move) {
+	var move = _(this.possible_moves()).reduce(function(best_move, possible_move) {
 		test_board = this.clone();
 		test_board.play(possible_move);
 		console.log(test_board.winner());
 		return test_board.winner() === player ? possible_move : best_move;
 	}.bind(this), undefined);
+	if(move !== undefined) {
+		this.play(move);
+		return true;
+	} else {
+		return false;
+	}
 }
 
 Board.prototype.canBlockWin = function() {
@@ -88,6 +102,12 @@ Board.prototype.canBlockFork = function() {
 }
 
 Board.prototype.canPlayCenter = function() {
+	if(this.state.get()[4] === 0) {
+		this.play(4);
+		return true;
+	} else  {
+		return false;
+	}
 }
 
 Board.prototype.canPlayOppositeCorner = function() {
