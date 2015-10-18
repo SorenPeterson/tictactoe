@@ -4,6 +4,7 @@
 <body>
 	<h1>Tic Tac Toe</h1>
 	{{> Board}}
+	{{> GameOver}}
 </body>
 
 <template name="Board">
@@ -18,5 +19,13 @@
 			</tr>
 		{{/each}}
 	</table>
+</template>
+
+<template name="GameOver">
+	{{#if gameOver}}
+		<div class="game-end-overlay">
+			GAME OVER!
+		</div>
+	{{/if}}
 </template>
 

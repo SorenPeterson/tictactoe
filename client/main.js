@@ -49,6 +49,12 @@ Template.Board.helpers({
 		});
 		return doge;
 	},
+	gameOver: function() {
+		return board.finished();
+	},
+	winner: function() {
+		return board.winner();
+	},
 });
 
 Template.Board.events({
@@ -58,3 +64,11 @@ Template.Board.events({
 	},
 });
 
+Template.GameOver.helpers({
+	gameOver: function() {
+		return board.finished();
+	},
+	winner: function() {
+		return board.winner();
+	},
+});
