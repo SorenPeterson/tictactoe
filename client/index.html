@@ -24,7 +24,14 @@
 <template name="GameOver">
 	{{#if gameOver}}
 		<div class="game-end-overlay">
-			GAME OVER!
+			<h1>GAME OVER!</h1>
+			<h1>
+				{{#if winner}}
+					{{winner}} wins
+				{{else}}
+					It's a tie
+				{{/if}}
+			</h1>
 			<div class="restart">
 				Play again
 			</div>

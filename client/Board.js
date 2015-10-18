@@ -57,7 +57,9 @@ Board.prototype.play = function(position) {
 		state[position] = this.turn.get();
 		this.turn.set(this.turn.get() === 'x' ? 'o' : 'x');
 		this.state.set(state);
+		return true;
 	}
+	return false;
 }
 
 Board.prototype.pass = function() {
