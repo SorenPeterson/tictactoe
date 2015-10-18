@@ -2,7 +2,7 @@
 	<title>Tic Tac Toe</title>
 </head>
 <body>
-	<h1>Tic Tac Toe</h1>
+	<h1 class="title">Tic Tac Toe</h1>
 	{{> Board}}
 	{{> GameOver}}
 </body>
@@ -25,6 +25,9 @@
 	{{#if gameOver}}
 		<div class="game-end-overlay">
 			GAME OVER!
+		</div>
+		<div class="restart">
+			Restart
 		</div>
 	{{/if}}
 </template>
