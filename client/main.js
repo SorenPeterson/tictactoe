@@ -49,11 +49,6 @@ Template.Board.helpers({
 		});
 		return doge;
 	},
-	marker: function(letter) {
-		switch(letter) {
-			case 'x':
-		}
-	},
 });
 
 Template.Board.events({

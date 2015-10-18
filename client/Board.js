@@ -60,6 +60,14 @@ Board.prototype.play = function(position) {
 	}
 }
 
+Board.prototype.pass = function() {
+	this.turn.set(this.opponent());
+}
+
+Board.prototype.opponent = function() {
+	return this.turn.get() === 'x' ? 'o' : 'x';
+}
+
 Board.prototype.winningLines = [
 	[0, 1, 2],
 	[3, 4, 5],
@@ -100,11 +108,11 @@ Board.prototype.canWin = function() {
 }
 
 Board.prototype.canBlockWin = function() {
-	var opponent = this.turn.get() === 'x' ? 'o' : 'x';
+	var opponent = this.opponent();
 	var best_move;
 	_(this.possible_moves()).each(function(move) {
 		var test_board = this.clone();
-		test_board.turn.set(opponent);
+		test_board.pass();
 		test_board.play(move);
 		if(test_board.winner() === opponent) {
 			best_move = move;
@@ -119,6 +127,20 @@ Board.prototype.canBlockWin = function() {
 }
 
 Board.prototype.canFork = function() {
+	var opponent = this.turn.get() ? === 'x' ? 'o' : 'x';
+	var best_move;
+	_(this.possible_moves()).each(function(move) {
+		var test_board = this.clone();
+		test_board.play(move);
+		var win_count = _(this.possible_moves()).reduce(function(count, possible_win) {
+			var test_board = this.clone();
+			test_board.play(possible_win);
+			return count + (test_board.winner() === opponent ? 1 : 0);
+		}, 0)
+		if(win_count >= 2) {
+			best_move = move;
+		}
+	}.bind(this));
 }
 
 Board.prototype.canBlockFork = function() {
