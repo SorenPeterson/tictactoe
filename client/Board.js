@@ -147,9 +147,7 @@ Board.prototype.canFork = function() {
 			second_move.play(possible_win);
 			return count + (second_move.winner() === this.turn.get() ? 1 : 0);
 		}.bind(this), 0)
-		console.log(win_count);
 		if(win_count >= 2) {
-			debugger;
 			best_move = move;
 		}
 	}.bind(this));
