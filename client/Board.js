@@ -165,6 +165,17 @@ Board.prototype.canFork = function() {
 }
 
 Board.prototype.canBlockFork = function() {
+	var opponent = this.opponent();
+	var best_move;
+	var test_board = this.clone();
+	test_board.pass();
+	best_move = test_board.findFork();
+	if(best_move !== undefined) {
+		this.play(best_move);
+		return true;
+	} else {
+		return false;
+	}
 }
 
 Board.prototype.canPlayCenter = function() {
