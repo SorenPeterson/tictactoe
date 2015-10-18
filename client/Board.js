@@ -135,7 +135,7 @@ Board.prototype.canBlockWin = function() {
 	}
 }
 
-Board.prototype.canFork = function() {
+Board.prototype.findFork = function() {
 	var opponent = this.opponent();
 	var best_move;
 	_(this.possible_moves()).each(function(move) {
@@ -151,6 +151,11 @@ Board.prototype.canFork = function() {
 			best_move = move;
 		}
 	}.bind(this));
+	return best_move;
+}
+
+Board.prototype.canFork = function() {
+	var best_move = this.findFork();
 	if(best_move !== undefined) {
 		this.play(best_move);
 		return true;
