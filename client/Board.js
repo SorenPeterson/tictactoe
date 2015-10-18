@@ -130,5 +130,18 @@ Board.prototype.canPlayEmptyCorner = function() {
 }
 
 Board.prototype.canPlayEmptySide = function() {
+	var state = this.state.get();
+	if(_([1, 3, 5, 7]).every(function(corner) {
+		if(state[corner] === 0) {
+			this.play(corner);
+			return false;
+		} else {
+			return true;
+		}
+	}.bind(this))) {
+		return false;
+	} else {
+		return true;
+	};
 }
 
