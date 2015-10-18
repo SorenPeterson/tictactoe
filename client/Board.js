@@ -49,6 +49,7 @@ Board.prototype.possible_moves = function() {
 
 Board.prototype.reset = function() {
 	this.state.set([0,0,0,0,0,0,0,0,0]);
+	this.turn.set('x');
 }
 
 Board.prototype.play = function(position) {
